@@ -11,6 +11,31 @@
 
         },
         {
+            "intent" : "Attack",
+            "slots" : [
+                {
+                    "name" : "row",
+                    "type" : "number"
+                },
+                {
+                    "name" : "column",
+                    "type" : "letter"
+                }
+            ]
+        },
+        {
+            "intent" : "Status",
+            "slots" : [
+                {
+                    "name" : "ship",
+                    "type" : "SHIP"
+                }
+            ]
+        },
+        {
+            "intent" : ""
+        },
+        {
             "intent": "AMAZON.HelpIntent"
         },
         {
