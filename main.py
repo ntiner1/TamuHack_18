@@ -39,7 +39,7 @@ def onLaunch(launchRequest, session):
 
 def getWelcomeResponse():
     cardTitle = "Welcome to arrival"
-    speechOutput = """By using this skill it is possible to determine when to leave for the airport."""    
+    speechOutput = """Use this skill to determine when to leave for the airport."""    
 
 def onIntent(intentRequest, session):
     intent = intentRequest['intent']
