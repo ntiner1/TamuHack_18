@@ -7,7 +7,7 @@ import ast
 #Google Distance Matrix API key: AIzaSyCHiE5YsOom6XH_IX2eTtM7q1kq0VeEJ2I
 # boilerplate for AWS
 
-class FlightDict(object):
+class FlightDict(object): # backup unicode to dictionary class
     def __init__(self,data):
         self.dict = ast.literal_eval(data)
 
