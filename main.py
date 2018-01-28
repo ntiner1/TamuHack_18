@@ -67,7 +67,7 @@ def getFlightInfo(intent):
         leaveTime = calcLeaveTime(arrivalTime,travelTime)
         print(str(leaveTime))
 
-        SMS("You should leave in 5 minutes to arrive at " + airport + " on time", 18176821126)
+        SMS("You should leave in 5 minutes to arrive at " + airport + " on time\nhttps://goo.gl/maps/PqWQF51eH3G2", 18176821126)
         speechOutput = "AA" + str(flightNumber) + ", tracked succesfully. You will need to leave by " + str(leaveTime)
         cardTitle = speechOutput
     else:
