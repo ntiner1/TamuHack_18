@@ -65,7 +65,7 @@ def getFlightInfo(intent):
         leaveTime = calcLeaveTime(arrivalTime,travelTime)
         print(str(leaveTime))
 
-        speechOutput = "Flight Tracked Successfully."
+        speechOutput = "AA" + str(flightNumber) + ", tracked succesfully. You will need to leave by " + str(leaveTime)
         cardTitle = speechOutput
     else:
         speechOutput = "Error connecting to API"
@@ -96,6 +96,12 @@ def calcLeaveTime(arrivalTime, travelTime):
     arrivalTime = datetime.datetime.strptime(arrivalTime[:-6], "%Y-%m-%dT%H:%M")
     return arrivalTime - datetime.timedelta(seconds=travelTime)
 
+def SMS(text,num,unix_time):
+    username = "ishanvasandani"
+    token = "XBArTWfwovCDJj854bADTFYzIWOfXx"
+    client = TextmagicRestClient(username, token)
+    message = client.messages.create(phones=str(num), text=str(text), sendingTime=str(unix_time))
+
 
     # --------------- Helpers that build all of the responses -----------------------
 def buildSpeechletResponse(title, output, repromptText, shouldEndSession):
@@ -106,8 +112,8 @@ def buildSpeechletResponse(title, output, repromptText, shouldEndSession):
         },
         "card": {
             "type": "Simple",
-            "title": "myTesla - " + title,
-            "content": "myTesla - " + output
+            "title": "Arrival - " + title,
+            "content": "Arrival - " + output
         },
         "reprompt": {
             "outputSpeech": {
