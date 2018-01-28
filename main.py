@@ -97,12 +97,12 @@ def calcLeaveTime(arrivalTime, travelTime):
         Assuming that arrivalTime is a STRING. '''
     
     arrivalTime = datetime.datetime.strptime(arrivalTime[:-6], "%Y-%m-%dT%H:%M")
-    return datetime.datetime.strptime(arrivalTime - datetime.timedelta(seconds=travelTime), "%I:%M %p on %A, %B %d.") #time pm, on day of week, month, day
+    return (arrivalTime - datetime.timedelta(seconds=travelTime)).strftime("%I:%M %p on %A, %B %d.") #time pm, on day of week, month, day
 
 def SMS(text,num):#,unix_time):
     print("In SMS Function")
-    username = "ishanvasandani"
-    token = "XBArTWfwovCDJj854bADTFYzIWOfXx"
+    username = "nathanbrockway"
+    token = "4jQ1P1Jm1c0qhgSoySHfGxqgaEv2ie"
     client = TextmagicRestClient(username, token)
     message = client.messages.create(phones=str(num), text=str(text))#, sendingTime=str(unix_time))
 
