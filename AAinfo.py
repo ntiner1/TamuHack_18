@@ -2,6 +2,7 @@ import requests
 import os
 import json
 import datetime
+import ast
 
 #Google Distance Matrix API key: AIzaSyCHiE5YsOom6XH_IX2eTtM7q1kq0VeEJ2I
 # boilerplate for AWS
@@ -22,7 +23,7 @@ def getUser(email):
     if r.status_code == 400:
         # even if not found, a JSON is still returned by the API
         print("No user with email " + email + " found.")
-    return r.text
+    return r.json()
 
 # POST /user
 def postUSer(firstName, lastName, email, gender, aadvantageNumber):
@@ -43,7 +44,7 @@ def postUSer(firstName, lastName, email, gender, aadvantageNumber):
     if r.status_code == 400:
         # even if not created, a JSON is still returned by the API
         print("API returned status code " + r.status_code + ". User not created.")
-    return r.text
+    return r.json()
 
 # GET /reservation
 def getReservation(recordLocator):
@@ -57,7 +58,7 @@ def getReservation(recordLocator):
     if r.status_code == 500:
         # even when no reservation is found, a JSON is still returned by the API
         print("Reservation with recordLocator " + recordLocator + " not found.")
-    return r.text
+    return r.json()
 
 # POST /reservation
 def postReservation(userId, flightIds):
@@ -73,8 +74,7 @@ def postReservation(userId, flightIds):
         raise
     
     # create the request URL with a fun loop
-    request_url = "https://tamuhack-2018.herokuapp.com/reservation?userId=" + userId + 
-                    "&flightIds="
+    request_url = "https://tamuhack-2018.herokuapp.com/reservation?userId=" + userId + "&flightIds="
     for i in range(0, flightIds.size()):
         request_url += flightIds[i]
         if i < flightIds.size() - 1:
@@ -85,12 +85,12 @@ def postReservation(userId, flightIds):
         # if this error message occurs, a JSON is not returned by the API
         print("API returned status code " + r.status_code + ". Reservation was not created.")
         return ""
-    return r.text
+    return r.json()
 
 # GET /flight
 def getFlight(flightNumber, date):
-    ''' Return JSON of flight with flightNumber 'flightNumber' in a given UTC datetime range.
-        flightNumber and date are required fields. '''
+    ''' Return JSON of flight with flightNumber 'flightNumber' in a given UTC datetime range. 
+            flightNumber and date are required fields. '''
 
     if not flightNumber or not date:
         print("Error: 'flightNumber' and 'date' are required fields")
@@ -99,7 +99,7 @@ def getFlight(flightNumber, date):
     if r.status_code != 200:
         print("API returned status code " + r.status_code)
         raise
-    return r.text
+    return r.json()
 
 # GET /flights
 def getFlights(origin, destination, date):
@@ -109,12 +109,11 @@ def getFlights(origin, destination, date):
     if not date:
         print("Error: 'date' is a required field")
         raise
-    r = requests.get("https://tamuhack-2018.herokuapp.com/flights?origin=" + origin +
-    "&destination=" + destination + "&date=" + date)
+    r = requests.get("https://tamuhack-2018.herokuapp.com/flights?origin=" + origin + "&destination=" + destination + "&date=" + date)
     if r.status_code != 200:
         print("API returned status code " + r.status_code)
         raise
-    return r.text
+    return r.json()
 
 # POST /flightStatus
 def postFlightStatus(flightNumber, status):
@@ -125,26 +124,20 @@ def postFlightStatus(flightNumber, status):
     if status != "On-Time" and status != "Delayed" and status != "Cancelled":
         print("Invalid status passed to API. Request not sent.")
         raise
-    r = requests.post("https://tamuhack-2018.herokuapp.com/flightStatus?flightId=" + flightNumber +
-     "&flightStatus=" + status)
+    r = requests.post("https://tamuhack-2018.herokuapp.com/flightStatus?flightId=" + flightNumber + "&flightStatus=" + status)
     if r.status_code == 500:
         # even if invalid, a JSON is still returned by the API
         print("Error: invalid argument passed to API.")
-    return r.text
+    return r.json()
 
 # GET /airports
 def getAirports(code):
     ''' Return JSON of airport with code 'code'. If no 'code' parameter passed, JSON of all airports
         returned. '''
 
-    r = requests.get("https://tamuhack-2018.herokuapp.com/airports?" + code)
+    r = requests.get("https://tamuhack-2018.herokuapp.com/airports?code=" + code)
     if r.status_code != 200:
         print("API returned status code " + r.status_code)
         raise
-    return r.text
+    return r.json()
 
-
-def main():
-    g = getFlight("1708", "2018-03-01T18:00-08:00")
-    print(g)
-main()

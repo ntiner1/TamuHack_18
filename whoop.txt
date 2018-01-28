@@ -1,1 +1,27 @@
 A-A-A whoop!
+
+FlightSegment{
+flightNumber	string
+originCode	string
+originCity	string
+destinationCode	string
+destinationCity	string
+estimatedDeparture	string
+scheduledDeparture	string
+estimatedArrival	string
+scheduledArrival	string
+}
+
+
+Airport{
+id	string
+code*	string
+name	string
+city	string
+stateCode	string
+countryName	string
+countryCode	string
+longitude	number
+latitude	number
+admiralsClubUrl	string
+}
