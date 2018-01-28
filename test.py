@@ -1,4 +1,5 @@
 import datetime
+from textmagic.rest import TextmagicRestClient
 
 def calcLeaveTime(arrivalTime, travelTime):
     ''' Calculates the time you should leave the house in order to arrive at 'arrivalTime.
@@ -7,3 +8,12 @@ def calcLeaveTime(arrivalTime, travelTime):
     
     arrivalTime = datetime.datetime.strptime(arrivalTime[:-6], "%Y-%m-%dT%H:%M")
     return arrivalTime - datetime.timedelta(seconds=travelTime)
+
+def SMS(text,num):
+    username = "ishanvasandani"
+    token = "XBArTWfwovCDJj854bADTFYzIWOfXx"
+    client = TextmagicRestClient(username, token)
+    
+    message = client.messages.create(phones=str(num), text=str(text), sendingTime="1517117100")
+
+SMS("Test 2","19036352069")
