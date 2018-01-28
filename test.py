@@ -9,7 +9,7 @@ def calcLeaveTime(arrivalTime, travelTime):
     arrivalTime = datetime.datetime.strptime(arrivalTime[:-6], "%Y-%m-%dT%H:%M")
     return arrivalTime - datetime.timedelta(seconds=travelTime)
 
-<<<<<<< HEAD
+
 def UTCtoUNIX(utc_time):
     ''' Converts STRING UTC time 'utc_time' to UNIX time (in seconds since midnight 1/1/1970).
         'utc_time' MUST BE A STRING WITH TIME ZONE INFORMATION. '''
@@ -23,13 +23,14 @@ d = calcLeaveTime(date, 0)
 u = UTCtoUNIX(date)
 print(str(d))
 print(str(u))
-=======
-def SMS(text,num,unix_time):
+
+
+def SMS(text,num):#,unix_time):
     username = "ishanvasandani"
     token = "XBArTWfwovCDJj854bADTFYzIWOfXx"
     client = TextmagicRestClient(username, token)
     
-    message = client.messages.create(phones=str(num), text=str(text), sendingTime=str(unix_time))
+    message = client.messages.create(phones=str(num), text=str(text))#, sendingTime=str(unix_time))
+
 
 #SMS("Test 2","19036352069","151711800")
->>>>>>> 05c9a61a915ad230aa339c89bb7a8e492e13328c

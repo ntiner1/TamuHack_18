@@ -1,39 +1,22 @@
 {
     "intents": [
         {
-            "intent" : "StartGame",
-            "slots" : [
+            "intent": "TrackFlight",
+            "slots": [
                 {
-                    "name":"TEST",
-                    "type":"TEST"
-                }
-            ]
-
-        },
-        {
-            "intent" : "Attack",
-            "slots" : [
-                {
-                    "name" : "row",
-                    "type" : "number"
-                },
-                {
-                    "name" : "column",
-                    "type" : "letter"
+                    "name": "flight_num",
+                    "type": "FLIGHT"
                 }
             ]
         },
         {
-            "intent" : "Status",
-            "slots" : [
+            "intent": "QueryTime",
+            "slots": [
                 {
-                    "name" : "ship",
-                    "type" : "SHIP"
+                    "name": "flight_num",
+                    "type": "FLIGHT"
                 }
             ]
-        },
-        {
-            "intent" : ""
         },
         {
             "intent": "AMAZON.HelpIntent"
@@ -42,4 +25,3 @@
             "intent": "AMAZON.StopIntent"
         }
     ]
-}
