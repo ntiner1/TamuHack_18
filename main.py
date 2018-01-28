@@ -35,8 +35,8 @@ def onLaunch(launchRequest, session):
     getWelcomeResponse()
 
 def getWelcomeResponse():
-    cardTitle = "Welcome to myTesla"
-    speechOutput = """By using this skill it is possible to control many functions of your Tesla Vehicle."""    
+    cardTitle = "Welcome to arrival
+    speechOutput = """By using this skill it is possible to determine when to leave for the airport."""    
 
 def onIntent(intentRequest, session):
     intent = intentRequest['intent']
@@ -53,15 +53,14 @@ def onIntent(intentRequest, session):
     raise  
 
 def getFlightInfo(intent):
-
     flightNumber = intent['slots']["flight_num"]['value']
-    print(flightNumber)
     res = requests.get("https://tamuhack-2018.herokuapp.com/flight?flightNumber=" + str(flightNumber)+ "&date=2018-03-01T08:45-06:00")
     if(res.status_code==200):
-        print ("Success")
+        res = res.json()
+        arrivalTime = res["arrivalTime"]
         airport = res["destination"]
-        print(airport)
-        #getTravelTime(airport)
+        duration = getTravelTime(airport)
+
         speechOutput = "Flight Tracked Successfully."
         cardTitle = speechOutput
     else:
@@ -73,14 +72,16 @@ def getFlightInfo(intent):
 
     return(buildSpeechletResponse(cardTitle,speechOutput,repromptText,shouldEndSession))
 
+
 def getTravelTime(airport):
-    res = requests.get("https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=2806 Carrick Ct, southlake TX 76092&destinations" + airport + "&key=YOUR_API_KEY")
+    res = requests.get("https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=2806 Carrick Ct, southlake TX 76092&destinations=" + airport + "&key=AIzaSyD-MmapiYx0aNVFB6R29twM2MJfIQ0lCVE")
     if(res.status_code == 200):
-        duration = res["rows"]["elements"]["duration"]["text"]
-        print("Travel Time: " + duration)
+        res = res.json()
+        duration = res["rows"][0]["elements"][0]["duration"]["value"]
+        print("Travel Time: " + str(duration))
+        return duration
     else:
         print("GOOGLE API ERROR")
-
 
 
 
