@@ -1,0 +1,3 @@
+TrackFlight track flight {flight_num}
+QueryTime when should I leave for flight {flight_num}
+QueryTime what time do I need to leave for {flight_num}
