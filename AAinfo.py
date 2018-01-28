@@ -2,9 +2,16 @@ import requests
 import os
 import json
 import datetime
+import ast
 
+#Google Distance Matrix API key: AIzaSyCib4RJYMASjkuobKzN1OLlEiK-5E-W_6g
 
 # boilerplate for AWS
+
+class FlightDict(object):
+    def __init__(self,data):
+        self.dict = ast.literal_eval(data)
+
 
 
 def getFlight(flightNumber, date):
@@ -21,7 +28,7 @@ def getFlight(flightNumber, date):
         print("API returned status code " + r.status_code)
         raise
 
-    return r.json
+    return r.text
 
 def getFlights(origin, destination, date):
     ''' Return JSON of all flights from 'origin' to 'destination' in a given UTC datetime range.
@@ -37,6 +44,14 @@ def getFlights(origin, destination, date):
 
 def main():
     g = getFlight("1708", "2018-03-01T18:00-08:00")
-    ##parsed = json.loads(g)
-    #json.dumps(g)
+
+
+    #a = dict(g.text.json)
+    #print(type(a))
+    #json_dict = json.load(g)
+    #print(json_dict.dict)
+    #for x in json_dict:
+    #    print(x)
+
+
 main()
