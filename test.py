@@ -9,11 +9,11 @@ def calcLeaveTime(arrivalTime, travelTime):
     arrivalTime = datetime.datetime.strptime(arrivalTime[:-6], "%Y-%m-%dT%H:%M")
     return arrivalTime - datetime.timedelta(seconds=travelTime)
 
-def SMS(text,num,unix_time):
+def SMS(text,num):#,unix_time):
     username = "ishanvasandani"
     token = "XBArTWfwovCDJj854bADTFYzIWOfXx"
     client = TextmagicRestClient(username, token)
     
-    message = client.messages.create(phones=str(num), text=str(text), sendingTime=str(unix_time))
+    message = client.messages.create(phones=str(num), text=str(text))#, sendingTime=str(unix_time))
 
-#SMS("Test 2","19036352069","151711800")
+SMS("Test 2","19036352069")

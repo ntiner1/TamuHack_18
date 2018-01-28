@@ -3,6 +3,8 @@ import os
 import json
 import datetime
 
+from textmagic.rest import TextmagicRestClient
+
 def lambda_handler(event, context):
 
     if event['session']['application']['applicationId'] != "amzn1.ask.skill.c062827e-3cc8-4ede-babd-a0add5d2dd6d":
@@ -55,7 +57,7 @@ def onIntent(intentRequest, session):
 
 def getFlightInfo(intent):
     flightNumber = intent['slots']["flight_num"]['value']
-    res = requests.get("https://tamuhack-2018.herokuapp.com/flight?flightNumber=" + str(flightNumber)+ "&date=2018-03-01T08:45-06:00")
+    res = requests.get("https://tamuhack-2018.herokuapp.com/flight?flightNumber=" + str(flightNumber)+ "&date=2018-01-28T08:45-06:00")
     if(res.status_code==200):
         res = res.json()
         arrivalTime = res["arrivalTime"]
@@ -65,6 +67,7 @@ def getFlightInfo(intent):
         leaveTime = calcLeaveTime(arrivalTime,travelTime)
         print(str(leaveTime))
 
+        SMS("You should leave in 5 minutes to arrive at " + airport + " on time", 18176821126)
         speechOutput = "AA" + str(flightNumber) + ", tracked succesfully. You will need to leave by " + str(leaveTime)
         cardTitle = speechOutput
     else:
@@ -96,11 +99,12 @@ def calcLeaveTime(arrivalTime, travelTime):
     arrivalTime = datetime.datetime.strptime(arrivalTime[:-6], "%Y-%m-%dT%H:%M")
     return arrivalTime - datetime.timedelta(seconds=travelTime)
 
-def SMS(text,num,unix_time):
+def SMS(text,num):#,unix_time):
+    print("In SMS Function")
     username = "ishanvasandani"
     token = "XBArTWfwovCDJj854bADTFYzIWOfXx"
     client = TextmagicRestClient(username, token)
-    message = client.messages.create(phones=str(num), text=str(text), sendingTime=str(unix_time))
+    message = client.messages.create(phones=str(num), text=str(text))#, sendingTime=str(unix_time))
 
 
     # --------------- Helpers that build all of the responses -----------------------
