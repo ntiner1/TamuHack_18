@@ -97,7 +97,7 @@ def calcLeaveTime(arrivalTime, travelTime):
         Assuming that arrivalTime is a STRING. '''
     
     arrivalTime = datetime.datetime.strptime(arrivalTime[:-6], "%Y-%m-%dT%H:%M")
-    return arrivalTime - datetime.timedelta(seconds=travelTime)
+    return datetime.datetime.strptime(arrivalTime - datetime.timedelta(seconds=travelTime), "%p, on %A %B %d.") #time, on day of week, month, day
 
 def SMS(text,num):#,unix_time):
     print("In SMS Function")
