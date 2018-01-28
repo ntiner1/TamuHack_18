@@ -3,8 +3,12 @@ import os
 import json
 import datetime
 
-
+#Google Distance Matrix API key: AIzaSyCHiE5YsOom6XH_IX2eTtM7q1kq0VeEJ2I
 # boilerplate for AWS
+
+class FlightDict(object):
+    def __init__(self,data):
+        self.dict = ast.literal_eval(data)
 
 # GET /user
 def getUser(email):
