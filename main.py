@@ -1,6 +1,7 @@
 import requests
 import os
 import json
+import datetime
 
 def lambda_handler(event, context):
 
@@ -35,7 +36,7 @@ def onLaunch(launchRequest, session):
     getWelcomeResponse()
 
 def getWelcomeResponse():
-    cardTitle = "Welcome to arrival
+    cardTitle = "Welcome to arrival"
     speechOutput = """By using this skill it is possible to determine when to leave for the airport."""    
 
 def onIntent(intentRequest, session):
@@ -59,7 +60,10 @@ def getFlightInfo(intent):
         res = res.json()
         arrivalTime = res["arrivalTime"]
         airport = res["destination"]
-        duration = getTravelTime(airport)
+        travelTime = getTravelTime(airport)
+
+        leaveTime = calcLeaveTime(arrivalTime,travelTime)
+        print(str(leaveTime))
 
         speechOutput = "Flight Tracked Successfully."
         cardTitle = speechOutput
@@ -84,7 +88,13 @@ def getTravelTime(airport):
         print("GOOGLE API ERROR")
 
 
-
+def calcLeaveTime(arrivalTime, travelTime):
+    ''' Calculates the time you should leave the house in order to arrive at 'arrivalTime.
+        Assuming that 'travelTime' is in SECONDS.
+        Assuming that arrivalTime is a STRING. '''
+    
+    arrivalTime = datetime.datetime.strptime(arrivalTime[:-6], "%Y-%m-%dT%H:%M")
+    return arrivalTime - datetime.timedelta(seconds=travelTime)
 
 
     # --------------- Helpers that build all of the responses -----------------------
