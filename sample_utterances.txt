@@ -1,4 +1,5 @@
 TrackFlight track flight {flight_num}
+TrackFlight track AA flight {flight_num}
 TrackFlight when should I leave for flight {flight_num}
 TrackFlight what time do I need to leave for {flight_num}
 TrackFlight what is the status of AA {flight_num}

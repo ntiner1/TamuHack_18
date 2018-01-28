@@ -39,7 +39,7 @@ def onLaunch(launchRequest, session):
 
 def getWelcomeResponse():
     cardTitle = "Welcome to arrival"
-    speechOutput = """By using this skill it is possible to determine when to leave for the airport."""    
+    speechOutput = """Use this skill to determine when to leave for the airport."""    
 
 def onIntent(intentRequest, session):
     intent = intentRequest['intent']
@@ -97,7 +97,7 @@ def calcLeaveTime(arrivalTime, travelTime):
         Assuming that arrivalTime is a STRING. '''
     
     arrivalTime = datetime.datetime.strptime(arrivalTime[:-6], "%Y-%m-%dT%H:%M")
-    return arrivalTime - datetime.timedelta(seconds=travelTime)
+    return datetime.datetime.strptime(arrivalTime - datetime.timedelta(seconds=travelTime), "%I:%M %p on %A, %B %d.") #time pm, on day of week, month, day
 
 def SMS(text,num):#,unix_time):
     print("In SMS Function")
