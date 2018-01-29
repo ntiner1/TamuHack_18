@@ -26,11 +26,22 @@ print(str(u))
 
 
 def SMS(text,num):#,unix_time):
-    username = "ishanvasandani"
-    token = "XBArTWfwovCDJj854bADTFYzIWOfXx"
-    client = TextmagicRestClient(username, token)
+    # username = "ishanvasandani"
+    # token = "XBArTWfwovCDJj854bADTFYzIWOfXx"
+    # client = TextmagicRestClient(username, token)
     
-    message = client.messages.create(phones=str(num), text=str(text))#, sendingTime=str(unix_time))
+    # message = client.messages.create(phones=str(num), text=str(text))#, sendingTime=str(unix_time))
+
+    account_id = "AC3ceb630505e1826b12e4d9a26e73adc9"
+    account_token = "0c0f8888ac6a21a8a1b02d7fc8c28fc5"
+    client = Client(account_id, account_token)
+    message = client.messages.create(
+        to=str(num),#"+18176821126",
+        #twillio number
+        from_="+19723759827",
+        body=str(text)
+    )
+    print(message.sid)
 
 
 #SMS("Test 2","19036352069","151711800")

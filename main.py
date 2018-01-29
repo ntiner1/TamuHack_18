@@ -3,7 +3,7 @@ import os
 import json
 import datetime
 
-from textmagic.rest import TextmagicRestClient
+from twilio.rest import Client
 
 def lambda_handler(event, context):
 
@@ -67,7 +67,7 @@ def getFlightInfo(intent):
         leaveTime = calcLeaveTime(arrivalTime,travelTime)
         print(str(leaveTime))
 
-        SMS("You should leave in 5 minutes to arrive at " + airport + " on time\nhttps://goo.gl/maps/PqWQF51eH3G2", 18176821126)
+        SMS("You should leave in 5 minutes to arrive at " + airport + " on time\nhttps://goo.gl/maps/PqWQF51eH3G2", "+18176821126")
         speechOutput = "AA" + str(flightNumber) + ", tracked succesfully. You will need to leave by " + str(leaveTime)
         cardTitle = speechOutput
     else:
@@ -101,10 +101,16 @@ def calcLeaveTime(arrivalTime, travelTime):
 
 def SMS(text,num):#,unix_time):
     print("In SMS Function")
-    username = "nathanbrockway"
-    token = "4jQ1P1Jm1c0qhgSoySHfGxqgaEv2ie"
-    client = TextmagicRestClient(username, token)
-    message = client.messages.create(phones=str(num), text=str(text))#, sendingTime=str(unix_time))
+    account_id = "AC3ceb630505e1826b12e4d9a26e73adc9"
+    account_token = "0c0f8888ac6a21a8a1b02d7fc8c28fc5"
+    client = Client(account_id, account_token)
+    message = client.messages.create(
+        to=str(num),  # "+18176821126",
+        #twillio number
+        from_="+19723759827",
+        body=str(text)
+    )
+    print(message.sid)
 
 
     # --------------- Helpers that build all of the responses -----------------------
